@@ -20,7 +20,7 @@ func main() {
 <h1>The curent server time is 
 <%
          Date date = new Date();
-         out.print( "<h3 align = \"center\">" +date.toString()+"</h3>");
+         out.print( "<h2 align = \"center\">" +date.toString()+"</h2>");
  %>
 </h1>
 </body>
