@@ -13,17 +13,19 @@ func main() {
 	}
 	defer file.Close()
 	v := os.Getenv("name")
-	s := `<%@ page import = "java.io.*,java.util.*, javax.servlet.*" %>
+	if v == "" {
+		v = "docker"
+	}
+	s := `<%@ page import="java.io.*,java.util.*,javax.servlet.*" %>
 <html>
 <body>
-<h2>Hello `+ v +` the Tomcat server is running!</h2>
-<h1>The curent server time is 
+<h2>Hello ` + v + ` the Tomcat server is running!</h2>
+<h1>The current server time is</h1>
 <%
-         Date date = new Date();
-         out.print( "<h4 align = \"center\">" +date.toString()+"</h4>");
- %>
-</h1>
+    Date date = new Date();
+    out.print("<h4 align=\"center\">" + date.toString() + "</h4>");
+%>
 </body>
 </html>`
-	fmt.Fprintf(file, s)
+	fmt.Fprintln(file, s)
 }
