@@ -3,10 +3,11 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 )
 
-func main() {
+func generateHTML() {
 	file, err := os.Create("index.html")
 	if err != nil {
 		log.Fatal("Cannot create file", err)
@@ -40,4 +41,17 @@ function checkTime(i) {
 </html>`
 
 	fmt.Fprintf(file, s)
+}
+
+func main() {
+	generateHTML()
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "index.html")
+	})
+
+	fmt.Println("Starting server at port 8080")
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal(err)
+	}
 }
